@@ -1,26 +1,32 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    int a[100], n;
-    cin >> n;
-    for(int i = 0; i < n; i++) cin >> a[i];
-
-    int start = a[0];
-    int low = 0, high = n - 1;
-
-    while(low <= high) {
-        int mid = (low + high) / 2;
-        int expected = start + mid;
-
-        if(a[mid] == expected) {
-            low = mid + 1; // Missing number is on the right
-        } else {
-            high = mid - 1; // Missing number is on the left
+int findMissing(int arr[], int n) {
+    // Since array is sorted and starts with 1
+    for (int i = 0; i < n - 1; i++) {
+        if (arr[i + 1] != arr[i] + 1) {
+            return arr[i] + 1; // missing number
         }
     }
+    return -1; // no missing number
+}
 
-    cout << "Missing number is " << (start + low) << "\n";
+int main() {
+    int arr[100], n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter " << n << " sorted elements (with one missing in sequence): ";
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    int missing = findMissing(arr, n);
+
+    if (missing != -1)
+        cout << "Missing number is: " << missing << endl;
+    else
+        cout << "No missing number detected." << endl;
 
     return 0;
 }
